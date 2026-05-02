@@ -4,10 +4,12 @@ on: push
 
 jobs:
   test:
-    runs-on: ubuntu-latest # pre-installed node.js
+    name: Run Vite tests
+    runs-on: ubuntu-latest
+
     steps:
       - name: Get code
-        uses: actions/checkout@v6.0.2 # download code from github
+        uses: actions/checkout@v6.0.2
 
       - name: Install NodeJS
         uses: actions/setup-node@v6
@@ -15,7 +17,16 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci # using versions which were used during development
+        run: npm ci
 
       - name: Run tests
         run: npm test
+
+      - name: Print test result
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Tests passed"
+          else
+            echo "❌ Tests failed"
+          fi
