@@ -1,15 +1,21 @@
 name: Test Vite
+
 on: push
-test:
-  runs-on: ubuntu-latest # pre-installed node.js
-  steps:
-    - name: Get code
-      uses: actions/checkout@v6.0.2 # download code from github
-    - name: Install NodeJS
-      uses: actions/setup-node@v6
-      with: 
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci # using versions which were used during development
-    - name: Run tests
-      run: npm tests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # pre-installed node.js
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6.0.2 # download code from github
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci # using versions which were used during development
+
+      - name: Run tests
+        run: npm test
